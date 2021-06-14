@@ -8,7 +8,7 @@ let socket;
 const ENDPOINT = 'localhost:5000'
 
 const Game = ( {location} ) => {
-  const [roomName, setRoomName ] = useState('')
+  const [roomName, setRoomName] = useState('')
   const [userName, setUserName] = useState("")
   const [users, setUsers] = useState([])
   // const [admin, setAdmin] = useState(false)
@@ -55,7 +55,7 @@ const Game = ( {location} ) => {
     })
   }, [])
 
-  const startGame = () => {
+  const startGame = (event) => {
     socket.emit("startGame", )
   }
 

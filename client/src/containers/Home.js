@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { loginUser } from "../utils/usernameHandler";
-imp
+import "./Home.css";
 
 const generateGameId = () => {
   const charset = "abcdefghijklmnopqrstuvwxyz";
@@ -32,8 +32,8 @@ const Home = () => {
 
   return (
 
-    <div>
-      <div>
+    <div className = "outerContainer">
+      <div className = "innerContainer1">
         <h1>Start Game</h1>
         <form onSubmit={userJoin}>
           username: <input type="text" id="username" name="username" value={username} onChange={({ target }) => setUsername(target.value)} />
@@ -41,9 +41,12 @@ const Home = () => {
         </form>
 
       </div>
-      {/* Enter username and create invite link */ }
-      <h1>Join Game</h1>
-      {/* Optional: enter link to join the game | you can use the link to directly visit */ }
+
+      <div className = "innerContainer2">
+        {/* Enter username and create invite link */ }
+          <h1>Join Game</h1>
+        {/* Optional: enter link to join the game | you can use the link to directly visit */ }
+      </div>
     </div>
   )
 }
