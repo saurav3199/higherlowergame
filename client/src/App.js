@@ -1,13 +1,16 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Game from "./containers/Game";
+import Home from "./containers/Home";
 
 const App = () => {
-  const [ userName, setUserName ] = useState("")
-  const [ isLoggedin, setisLoggedin ] = useState(false)
-  
+
   return (
-    <div>
-      hi
-    </div>
+    <Router>
+        <Route path="/game/:gameId" component={Game} />
+        <Route path="/" exact component={Home} />
+    </Router>
   )
 }
 

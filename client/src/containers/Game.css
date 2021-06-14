@@ -1,0 +1,117 @@
+.pack-term {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 33.33333%;
+  text-align: center;
+  background-size: cover;
+  background-position: center center;
+}
+
+.pack-term:nth-child(2) .pack-term__wrapper {
+  height: 70%;
+}
+
+@media screen and (orientation: landscape) {
+  .pack-term:nth-child(2) .pack-term__wrapper {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .pack-term:nth-child(2) .pack-term__wrapper {
+    height: 100%;
+  }
+}
+
+.pack-term:before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+@media screen and (min-width: 60em) {
+  .pack-term {
+    width: 33.33333%;
+    height: 100%;
+    float: left;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .pack-term {
+    width: 33.33333%;
+    height: 100%;
+    float: left;
+  }
+}
+
+.pack-term__wrapper {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media screen and (orientation: landscape) {
+  .pack-term__wrapper {
+    top: -8%;
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .pack-term__wrapper {
+    top: 0;
+  }
+}
+
+.pack-term__wrapper--current {
+  vertical-align: top;
+}
+
+@media screen and (min-width: 41.25em) {
+  .pack-term__wrapper--current {
+    padding-bottom: .625rem;
+    top: 0;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .pack-term__wrapper--current {
+    padding-top: 0;
+    padding-bottom: .625rem;
+  }
+}
+
+.pack-term__attribution {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+}
+
+.button {
+  background-color: #4CAF50;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
