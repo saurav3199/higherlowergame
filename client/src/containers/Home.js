@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { loginUser } from "../utils/usernameHandler";
+imp
 
 const generateGameId = () => {
   const charset = "abcdefghijklmnopqrstuvwxyz";
@@ -24,7 +25,6 @@ const Home = () => {
     event.preventDefault();
     event.target.username.value = "";
     console.log(username)
-    setUsername('')
     loginUser(username)
     const gameId = generateGameId()
     history.push(`/game/${gameId}`)

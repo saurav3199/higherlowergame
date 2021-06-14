@@ -2,7 +2,7 @@
 const tokenName = "HiLoGamer"
 
 export const getUser = () => {
-  const user = window.localStorage.getItem(tokenName);
+  const user = window.sessionStorage.getItem(tokenName);
   
   try {
     const storedUser = JSON.parse(user);
@@ -13,9 +13,9 @@ export const getUser = () => {
 }
 
 export const loginUser = (username) => {
-  window.localStorage.setItem(tokenName, JSON.stringify(username));
+  window.sessionStorage.setItem(tokenName, JSON.stringify(username));
 }
 
 export const logoutUser = () => {
-  window.localStorage.removeItem(tokenName);
+  window.sessionStorage.removeItem(tokenName);
 }

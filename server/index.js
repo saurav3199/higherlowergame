@@ -1,7 +1,7 @@
 const http = require('http')
 const socketio = require('socket.io');
 
-const {addUser } = require('./users')
+const {addUser, removeUser, getUsersInRoom } = require('./users')
 const app = require('./app');
 const PORT = process.env.PORT || 5000
 
@@ -20,12 +20,21 @@ io.on('connect', (socket) => {
         if(error) return callback(error);
         
         socket.join(user.room)
+
+        io.to(user.room).emit('roomUsers', {room: user.room, users: getUsersInRoom(user.room)})
         console.log(user)
         callback();
     })
     
     socket.on('disconnect', () => {
         console.log('Client just left');
+        const user = removeUser(socket.id)
+        console.log(user)
+        socket.leave(user.room)
+        console.log(user)
+        if(user){
+            io.to(user.room).emit('roomUsers', {room: user.room, users: getUsersInRoom(user.room)})
+        }
     })
 
 })
