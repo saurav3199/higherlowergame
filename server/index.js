@@ -1,6 +1,6 @@
 const http = require('http')
 const socketio = require('socket.io');
-
+const data = require('./data.json')
 const {addUser, removeUser, getUsersInRoom } = require('./users')
 const app = require('./app');
 const PORT = process.env.PORT || 5000
@@ -19,16 +19,20 @@ io.on('connect', (socket) => {
         const {error, user} = addUser({id: socket.id, name: userName, room: roomName})
         if(error) return callback(error);
         
-        socket.join(user.room)
-
+        socket.join(user.room)   
         io.to(user.room).emit('roomUsers', {room: user.room, users: getUsersInRoom(user.room)})
-        console.log(user)
+        console.log(user)   
         callback();
     })
     
-    socket.on('disconnect', () => {
-        console.log('Client just left');
-        const user = removeUser(socket.id)
+    socket.on('startGame', () => {
+        const items = Object.keys(data);
+        
+    })
+
+    socket.on('disconnect', () => {   
+        console.log('Client just left');   
+        const user = removeUser(socket.id)   
         console.log(user)
         socket.leave(user.room)
         console.log(user)
