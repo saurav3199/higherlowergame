@@ -11,6 +11,7 @@ const Game = ( {location} ) => {
   const [roomName, setRoomName] = useState('')
   const [userName, setUserName] = useState("")
   const [users, setUsers] = useState([])
+  const [started, setStarted] = useState(false)
   // const [admin, setAdmin] = useState(false)
   const [isLoggedin, setisLoggedin] = useState(false)
 
@@ -56,7 +57,26 @@ const Game = ( {location} ) => {
   }, [])
 
   const startGame = (event) => {
-    socket.emit("startGame", )
+    socket.emit("startGame")
+    setStarted(true)
+  }
+
+  const gameScreen = () => {
+    return (
+      <div>
+        <div style={style} className="pack-term">hello</div>
+        <button type="submit" onClick={startGame} disabled={users.length > 0 ? users[0].name !== userName : false}> Start Game</button>
+      </div>
+    )
+  }
+
+  const liveScreen = () => {
+    return (
+      <div>
+        <Image imageData = {imageData} position={"left"}/>
+        <Image imageData = {imageData} position={"right"}/>
+      </div>
+    )
   }
 
   const image = "http://api.higherlowergame.com/_client/images/general/lsd.jpg";
@@ -64,12 +84,10 @@ const Game = ( {location} ) => {
     backgroundImage: `url(${image})`
   }
   return (
-    <div>
-      <Users users={users} />
-      <div style={style} className="pack-term">hello</div>
-      <button type="submit" onClick={startGame} disabled={users.length > 0 ? users[0].name !== userName : false}> Start Game</button>
-    </div>
-
+    <>
+    <Users users={users} />
+    { !started ? gameScreen() : liveScreen() }
+    </>
   )
 }
 

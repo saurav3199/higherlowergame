@@ -1,6 +1,6 @@
 const http = require('http')
 const socketio = require('socket.io');
-
+const data = require('./data.json')
 const {addUser, removeUser, getUsersInRoom } = require('./users')
 const app = require('./app');
 const PORT = process.env.PORT || 5000
@@ -26,6 +26,7 @@ io.on('connect', (socket) => {
     })
     
     socket.on('startGame', () => {
+        const items = Object.keys(data);
         
     })
 
