@@ -26,9 +26,6 @@ const Home = () => {
     history.push(`/game/${gameId}`);
   };
 
-  // const LogoImage =
-  //   "https://drive.google.com/file/d/1OhWTGspUoMyuMpzUNT-xB6izZROdZND4/view?usp=sharing";
-
   return (
     <div className="outerOuterContainer">
       <div className="outerContainer">

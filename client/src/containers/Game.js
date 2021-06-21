@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { getUser, loginUser } from "../utils/usernameHandler";
 import Users from "./Users";
+import Image from "./Image"
 import "./Game.css";
 
 let socket;
@@ -12,8 +13,8 @@ const Game = ( {location} ) => {
   const [userName, setUserName] = useState("")
   const [users, setUsers] = useState([])
   const [started, setStarted] = useState(false)
-  // const [admin, setAdmin] = useState(false)
-  const [isLoggedin, setisLoggedin] = useState(false)
+  const [imageData, setImageData] = useState([])
+
 
   console.log(userName, roomName, users)
 
@@ -50,15 +51,20 @@ const Game = ( {location} ) => {
     socket.on("roomUsers", ({users}) => {
       console.log(users);
       setUsers(users)
-      if(users[0] === userName){
-        // send the Start Game option
-      }
+    })
+  }, [])
+
+// Start the level One of game
+  useEffect(() => {
+    socket.on("levelOne", ({ firstItem, secondItem }) => {
+      setImageData([firstItem, secondItem])
+      setStarted(true)
+      console.log(firstItem, secondItem)
     })
   }, [])
 
   const startGame = (event) => {
     socket.emit("startGame")
-    setStarted(true)
   }
 
   const gameScreen = () => {
@@ -71,10 +77,13 @@ const Game = ( {location} ) => {
   }
 
   const liveScreen = () => {
+    const sendAnswer = (event) => {
+      console.log(event.target);
+    }
     return (
       <div>
-        <Image imageData = {imageData} position={"left"}/>
-        <Image imageData = {imageData} position={"right"}/>
+        <Image imageData = {imageData[0]} position={"left"}/>
+        <Image imageData = {imageData[1]} position={"right"} sendAnswer={sendAnswer} />
       </div>
     )
   }
