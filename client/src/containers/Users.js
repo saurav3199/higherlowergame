@@ -1,61 +1,47 @@
-import "./styles.css";
 import {
   makeStyles,
   createMuiTheme,
-  ThemeProvider
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
-import Users from "./users.js";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
+import "./Users.css";
 import { red, green, blue } from "@material-ui/core/colors";
 
-const Users = ({users}) => {
-
+const handleClick = () => {};
+const Users = ({ users }) => {
+  console.log("THis is from users,", users);
   return (
     <Container className="container">
       <List className="userList">
-        {
-        Users.map((user) => {
-          if (user.glow === "right") {
-            return (
-              <ThemeProvider>
-                <ListItem>
-                  <Chip
-                    className="userNameright"
-                    color="primary"
-                    // style={{ backgroundColor: "green" }}
-                    avatar={<Avatar>{user.name[0]}</Avatar>}
-                    label={user.name}
-                    onClick={handleClick}
-                    variant={user.variant}
-                  />
-                </ListItem>
-              </ThemeProvider>
-            );
-          } else if (user.glow === "wrong") {
-            return (
-              <>
-                <ListItem>
-                  <Chip
-                    className="userNamewrong"
-                    color="secondary"
-                    // style={{ backgroundColor: "red" }}
-                    avatar={<Avatar>{user.name[0]}</Avatar>}
-                    label={user.name}
-                    onClick={handleClick}
-                    variant={user.variant}
-                  />
-                </ListItem>
-              </>
-            );
-          }
+        {users.map((user) => {
+          return (
+            <>
+              <ListItem>
+                <Chip
+                  className="userNamewrong"
+                  color="secondary"
+                  // style={{ backgroundColor: "red" }}
+                  avatar={<Avatar>{user.name[0]}</Avatar>}
+                  label={user.name}
+                  onClick={handleClick}
+                  variant="outline"
+                />
+              </ListItem>
+            </>
+          );
         })}
       </List>
-      </Container>
-  )
-}
+
+      <div className="App">
+        <h1 className="titles">Hi Players!</h1>
+        <h2 className="titles">Edit to see some magic happen!</h2>
+      </div>
+    </Container>
+  );
+};
 
 export default Users;

@@ -1,4 +1,12 @@
-.pack-term {
+.body-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateZ(100px); 
+}
+
+
+/* .pack-term {
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -106,7 +114,7 @@
 
 .button {
   background-color: #4CAF50;
-  /* Green */
+
   border: none;
   color: white;
   padding: 15px 32px;
@@ -114,4 +122,5 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-}
+} */
+
