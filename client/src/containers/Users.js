@@ -17,10 +17,10 @@ const Users = ({ users }) => {
   return (
     <Container className="container">
       <List className="userList">
-        {users.map((user) => {
+        {users.map((user,index) => {
           return (
-            <>
-              <ListItem>
+            
+              <ListItem key={index}>
                 <Chip
                   className="userNamewrong"
                   color="secondary"
@@ -28,10 +28,10 @@ const Users = ({ users }) => {
                   avatar={<Avatar>{user.name[0]}</Avatar>}
                   label={user.name}
                   onClick={handleClick}
-                  variant="outline"
+                  variant="outlined"
                 />
               </ListItem>
-            </>
+            
           );
         })}
       </List>
