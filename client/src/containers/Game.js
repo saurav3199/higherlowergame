@@ -48,27 +48,44 @@ const Game = ({ location }) => {
   useEffect(() => {
     console.log(socket);
     socket.on("roomUsers", ({ users }) => {
-      console.log(users);
+      console.log("THis is the list of the users" , users);
       setUsers(users);
     });
   }, []);
 
   // Start the level One of game
   useEffect(() => {
-    socket.on("levelOne", ({ firstItem, secondItem }) => {
+    socket.on( "levelOne", ( firstItem, secondItem ) => {
       setImageData([firstItem, secondItem]);
       setStarted(true);
       console.log(firstItem, secondItem);
-    });
-  }, []);
+    }, []);
+  });
+
+  // Start the consecutive levels
+  useEffect(() => {
+    socket.on( "game:level", ( newItem ) => {
+      console.log(newItem)
+      setImageData([imageData[1], newItem]);
+      console.log(newItem["term"]);
+    }, []);
+  });
+
+  // Game ends
+  useEffect( () => {
+    socket.on( "game:end", () => {
+      setStarted(false);
+    })
+  })
 
   const startGame = (event) => {
-    socket.emit("startGame");
+    socket.emit( "game:load");
+    // socket.emit("game:level");
   };
 
   const gameScreen = () => {
     return (
-      <div class="body-wrapper">
+      <div className="body-wrapper">
         <div>
           <button
             type="submit"
@@ -84,8 +101,16 @@ const Game = ({ location }) => {
   };
 
   const liveScreen = () => {
-    const sendAnswer = (event) => {
-      console.log(event.target);
+    const sendAnswer = (response) => {
+      console.log(response, imageData[0]["searchVolume"])
+      socket.emit( "game:response", { 
+        volume: imageData[0]["searchVolume"], 
+        volumeToCompare: imageData[1]["searchVolume"],
+        imageNameToCompare: imageData[1]["term"],
+        verdict: response 
+      });
+      // gameState:  submitted
+      // console.log(event.target.value);
     };
     return (
       <div>

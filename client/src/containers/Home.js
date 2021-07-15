@@ -3,6 +3,8 @@ import { useHistory } from "react-router";
 import { loginUser } from "../utils/usernameHandler";
 import "./Home.css";
 import ProfilePicture from "../images/HomeLogo.png";
+
+
 const generateGameId = () => {
   const charset = "abcdefghijklmnopqrstuvwxyz";
   var Id = "";

@@ -13,7 +13,7 @@ import { red, green, blue } from "@material-ui/core/colors";
 
 const handleClick = () => {};
 const Users = ({ users }) => {
-  console.log("THis is from users,", users);
+  console.log("This is from users,", users);
   return (
     <Container className="container">
       <List className="userList">
