@@ -53,30 +53,29 @@ const Game = ({ location }) => {
     });
   }, []);
 
-  // Start the level One of game
+  // Game manipulation
   useEffect(() => {
+    
+    // Start the level One of game
     socket.on( "levelOne", ( firstItem, secondItem ) => {
       setImageData([firstItem, secondItem]);
       setStarted(true);
       console.log(firstItem, secondItem);
-    }, []);
-  });
+    });
 
-  // Start the consecutive levels
-  useEffect(() => {
+    // Start the next levels
     socket.on( "game:level", ( newItem ) => {
       console.log(newItem)
       setImageData([imageData[1], newItem]);
       console.log(newItem["term"]);
-    }, []);
-  });
+    });
 
-  // Game ends
-  useEffect( () => {
+    // Game ends
     socket.on( "game:end", () => {
       setStarted(false);
     })
-  })
+
+  });
 
   const startGame = (event) => {
     socket.emit( "game:load");
