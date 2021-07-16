@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { loginUser } from "../utils/usernameHandler";
 import "./Home.css";
+import ProfilePicture from "../images/HomeLogo.png";
+
 
 const generateGameId = () => {
   const charset = "abcdefghijklmnopqrstuvwxyz";
@@ -26,9 +28,6 @@ const Home = () => {
     history.push(`/game/${gameId}`);
   };
 
-  const LogoImage =
-    "https://png2.cleanpng.com/sh/aeb10d6cbcb072d985345b8b6c96ddfb/L0KzQYm3VMA2N6FqfZH0aYP2gLBuTfNidJ0yh9g2ZIX3iX7pjPFkc150iOU2ND3ndcT7if56NZhmhdc2Z3HwdX7zjBdwNWZme6g6MkC1Q4HoUPI1Nmk7S6g5MEm3QYa5Usk0OGI8UKMEOUKxgLBu/kisspng-call-of-duty-black-ops-4-destiny-game-game-logo-5ac6120230a0b4.8636009415229301781992.png";
-
   return (
     <div className="outerOuterContainer">
       <div className="outerContainer">
@@ -47,7 +46,7 @@ const Home = () => {
           </form>
         </div>
         <div className="innerContainer2">
-          <img src={LogoImage} />
+          <img src={ProfilePicture} />
         </div>
       </div>
 

@@ -44,7 +44,7 @@
     padding: 5%;
     border-radius: 25px;
     text-align: center;
-    width: 30%;
+    width: 40%;
 
 }
 
@@ -81,7 +81,7 @@
 
 /* For innerContainer1 */
 
-/* For innerContainer2 */
+/* For innerContainer2 - This is for the logo*/
 
 .innerContainer2 {
 
@@ -94,7 +94,8 @@
     align-items: center;
     justify-content: center;
     padding: 5%;
-    margin-right: 10%;
+    width: 60%;
+    /* margin-right: 10%; */
    
    
     

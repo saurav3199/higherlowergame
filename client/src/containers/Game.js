@@ -2,93 +2,133 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { getUser, loginUser } from "../utils/usernameHandler";
 import Users from "./Users";
+import Image from "./Image";
 import "./Game.css";
 
 let socket;
-const ENDPOINT = 'localhost:5000'
+const ENDPOINT = "localhost:5000";
 
-const Game = ( {location} ) => {
-  const [roomName, setRoomName] = useState('')
-  const [userName, setUserName] = useState("")
-  const [users, setUsers] = useState([])
-  const [started, setStarted] = useState(false)
-  // const [admin, setAdmin] = useState(false)
-  const [isLoggedin, setisLoggedin] = useState(false)
+const Game = ({ location }) => {
+  const [roomName, setRoomName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [users, setUsers] = useState([]);
+  const [started, setStarted] = useState(false);
+  const [imageData, setImageData] = useState([]);
 
-  console.log(userName, roomName, users)
+  console.log(userName, roomName, users);
 
-// User joins a room 
+  // User joins a room
   useEffect(() => {
-    let storedUser = getUser()
-    socket = io(ENDPOINT)
+    let storedUser = getUser(); // fetches the player's username from browser session.storage
+    socket = io(ENDPOINT);
 
-    if(!storedUser){
-      let newUser = prompt("Enter your username")      
-      while(newUser === ""){
-        newUser = prompt("Enter your username")
+    if (!storedUser) {
+      let newUser = prompt("Enter your username");
+      while (newUser === "") {
+        newUser = prompt("Enter your username");
       }
-      loginUser(newUser)
-      storedUser = newUser
+      loginUser(newUser);
+      storedUser = newUser;
     }
-    console.log(`${userName}, ${roomName}`)
-    const room = location.pathname.split('/')[2];
-    setUserName(storedUser)
-    setRoomName(room)
-    console.log(`sent: ${storedUser}, ${room}`)
+    console.log(`${userName}, ${roomName}`);
+    const room = location.pathname.split("/")[2]; // game id ;
+    setUserName(storedUser);
+    setRoomName(room);
+    console.log(`sent: ${storedUser}, ${room}`);
 
-    socket.emit('join', { userName: storedUser, roomName: room }, (error) => {
-      if(error){
-        alert(error)
+    socket.emit("join", { userName: storedUser, roomName: room }, (error) => {
+      if (error) {
+        alert(error);
       }
     });
-
+    // Send the request
   }, [ENDPOINT]);
 
-// Get list of users, first user is admin
+  // Get list of users, first user is admin
   useEffect(() => {
     console.log(socket);
-    socket.on("roomUsers", ({users}) => {
-      console.log(users);
-      setUsers(users)
-      if(users[0] === userName){
-        // send the Start Game option
-      }
+    socket.on("roomUsers", ({ users }) => {
+      console.log("THis is the list of the users" , users);
+      setUsers(users);
+    });
+  }, []);
+
+  // Game manipulation
+  useEffect(() => {
+    
+    // Start the level One of game
+    socket.on( "levelOne", ( firstItem, secondItem ) => {
+      setImageData([firstItem, secondItem]);
+      setStarted(true);
+      console.log(firstItem, secondItem);
+    });
+
+    // Start the next levels
+    socket.on( "game:level", ( newItem ) => {
+      console.log(newItem)
+      setImageData([imageData[1], newItem]);
+      console.log(newItem["term"]);
+    });
+
+    // Game ends
+    socket.on( "game:end", () => {
+      setStarted(false);
     })
-  }, [])
+
+  });
 
   const startGame = (event) => {
-    socket.emit("startGame")
-    setStarted(true)
-  }
+    socket.emit( "game:load");
+    // socket.emit("game:level");
+  };
 
   const gameScreen = () => {
     return (
-      <div>
-        <div style={style} className="pack-term">hello</div>
-        <button type="submit" onClick={startGame} disabled={users.length > 0 ? users[0].name !== userName : false}> Start Game</button>
+      <div className="body-wrapper">
+        <div>
+          <button
+            type="submit"
+            onClick={startGame}
+            disabled={users.length > 0 ? users[0].name !== userName : false}
+          >
+            {" "}
+            Start Game
+          </button>
+        </div>
       </div>
-    )
-  }
+    );
+  };
 
   const liveScreen = () => {
+    const sendAnswer = (response) => {
+      console.log(response, imageData[0]["searchVolume"])
+      socket.emit( "game:response", { 
+        volume: imageData[0]["searchVolume"], 
+        volumeToCompare: imageData[1]["searchVolume"],
+        imageNameToCompare: imageData[1]["term"],
+        verdict: response 
+      });
+      // gameState:  submitted
+      // console.log(event.target.value);
+    };
     return (
       <div>
-        <Image imageData = {imageData} position={"left"}/>
-        <Image imageData = {imageData} position={"right"}/>
+        <Image imageData={imageData[0]} position={"left"} />
+        <Image
+          imageData={imageData[1]}
+          position={"right"}
+          sendAnswer={sendAnswer}
+        />
       </div>
-    )
-  }
+    );
+  };
 
-  const image = "http://api.higherlowergame.com/_client/images/general/lsd.jpg";
-  const style = {
-    backgroundImage: `url(${image})`
-  }
   return (
     <>
-    <Users users={users} />
-    { !started ? gameScreen() : liveScreen() }
+      <Users users={users} />
+      {!started ? gameScreen() : liveScreen()}
     </>
-  )
-}
+  );
+};
 
 export default Game;
