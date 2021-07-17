@@ -48,37 +48,35 @@ const Game = ({ location }) => {
   useEffect(() => {
     console.log(socket);
     socket.on("roomUsers", ({ users }) => {
-      console.log("THis is the list of the users" , users);
+      console.log("THis is the list of the users", users);
       setUsers(users);
     });
   }, []);
 
   // Game manipulation
   useEffect(() => {
-    
     // Start the level One of game
-    socket.on( "levelOne", ( firstItem, secondItem ) => {
+    socket.on("levelOne", (firstItem, secondItem) => {
       setImageData([firstItem, secondItem]);
       setStarted(true);
       console.log(firstItem, secondItem);
     });
 
     // Start the next levels
-    socket.on( "game:level", ( newItem ) => {
-      console.log(newItem)
+    socket.on("game:level", (newItem) => {
+      console.log(newItem);
       setImageData([imageData[1], newItem]);
       console.log(newItem["term"]);
     });
 
     // Game ends
-    socket.on( "game:end", () => {
+    socket.on("game:end", () => {
       setStarted(false);
-    })
-
+    });
   });
 
   const startGame = (event) => {
-    socket.emit( "game:load");
+    socket.emit("game:load");
     // socket.emit("game:level");
   };
 
@@ -101,24 +99,28 @@ const Game = ({ location }) => {
 
   const liveScreen = () => {
     const sendAnswer = (response) => {
-      console.log(response, imageData[0]["searchVolume"])
-      socket.emit( "game:response", { 
-        volume: imageData[0]["searchVolume"], 
+      console.log(response, imageData[0]["searchVolume"]);
+      socket.emit("game:response", {
+        volume: imageData[0]["searchVolume"],
         volumeToCompare: imageData[1]["searchVolume"],
         imageNameToCompare: imageData[1]["term"],
-        verdict: response 
+        verdict: response,
       });
       // gameState:  submitted
       // console.log(event.target.value);
     };
     return (
-      <div>
-        <Image imageData={imageData[0]} position={"left"} />
-        <Image
-          imageData={imageData[1]}
-          position={"right"}
-          sendAnswer={sendAnswer}
-        />
+      <div class="ImageContainer">
+        <div class="LeftImageContainer">
+          <Image imageData={imageData[0]} position={"left"} />{" "}
+        </div>
+        <div class="RightImageContainer">
+          <Image
+            imageData={imageData[1]}
+            position={"right"}
+            sendAnswer={sendAnswer}
+          />
+        </div>
       </div>
     );
   };

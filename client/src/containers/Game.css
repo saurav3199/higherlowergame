@@ -3,7 +3,67 @@
   justify-content: center;
   align-items: center;
   transform: translateZ(100px); 
+  padding: 0;
+  margin: 0;
 }
+
+
+
+/* game screen components starts */
+/* .MuiContainer-root.container.MuiContainer-maxWidthLg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+} */
+
+.ImageContainer {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+
+}
+
+/* To the left image  */
+.LeftImageContainer {
+  display: flex;
+  transform: translateZ(-10);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 50vw;
+}
+
+.RightImageContainer {
+
+  display:flex;
+  transform: translateZ(-10);
+  height: 100%;
+  width: 50vw;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* game screen components ends*/
+
+
+
+
+
 
 
 /* .pack-term {
