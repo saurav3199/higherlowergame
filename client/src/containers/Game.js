@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { getUser, loginUser } from "../utils/usernameHandler";
 import Users from "./Users";
-import Image from "./Image";
-import "./Game.css";
+import LiveScreen from "./LiveScreen";
+import GameScreen from "./GameScreen";
 
 let socket;
 const ENDPOINT = "localhost:5000";
@@ -13,7 +13,6 @@ const Game = ({ location }) => {
   const [userName, setUserName] = useState("");
   const [users, setUsers] = useState([]);
   const [started, setStarted] = useState(false);
-  const [imageData, setImageData] = useState([]);
 
   console.log(userName, roomName, users);
 
@@ -53,82 +52,11 @@ const Game = ({ location }) => {
     });
   }, []);
 
-  // Game manipulation
-  useEffect(() => {
-    // Start the level One of game
-    socket.on("levelOne", (firstItem, secondItem) => {
-      setImageData([firstItem, secondItem]);
-      setStarted(true);
-      console.log(firstItem, secondItem);
-    });
-
-    // Start the next levels
-    socket.on("game:level", (newItem) => {
-      console.log(newItem);
-      setImageData([imageData[1], newItem]);
-      console.log(newItem["term"]);
-    });
-
-    // Game ends
-    socket.on("game:end", () => {
-      setStarted(false);
-    });
-  });
-
-  const startGame = (event) => {
-    socket.emit("game:load");
-    // socket.emit("game:level");
-  };
-
-  const gameScreen = () => {
-    return (
-      <div className="body-wrapper">
-        <div>
-          <button
-            type="submit"
-            onClick={startGame}
-            disabled={users.length > 0 ? users[0].name !== userName : false}
-          >
-            {" "}
-            Start Game
-          </button>
-        </div>
-      </div>
-    );
-  };
-
-  const liveScreen = () => {
-    const sendAnswer = (response) => {
-      console.log(response, imageData[0]["searchVolume"]);
-      socket.emit("game:response", {
-        volume: imageData[0]["searchVolume"],
-        volumeToCompare: imageData[1]["searchVolume"],
-        imageNameToCompare: imageData[1]["term"],
-        verdict: response,
-      });
-      // gameState:  submitted
-      // console.log(event.target.value);
-    };
-    return (
-      <div class="ImageContainer">
-        <div class="LeftImageContainer">
-          <Image imageData={imageData[0]} position={"left"} />{" "}
-        </div>
-        <div class="RightImageContainer">
-          <Image
-            imageData={imageData[1]}
-            position={"right"}
-            sendAnswer={sendAnswer}
-          />
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       <Users users={users} />
-      {!started ? gameScreen() : liveScreen()}
+      {!started ? <GameScreen users={users} userName={userName} socket={socket} setStarted={setStarted}/>
+      : <LiveScreen socket={socket} setStarted={setStarted}/>}
     </>
   );
 };

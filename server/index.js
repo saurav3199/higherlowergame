@@ -1,6 +1,6 @@
 const http = require('http')
 const socketio = require('socket.io');
-const dataItems = require('./newdata.json')["items"].sort( () => 0.5 - Math.random() )
+let dataItems = require('./newdata.json')["items"]
 
 const {addUser, removeUser, getUsersInRoom, getUser, updateUserLevel } = require('./users')
 const app = require('./app');
@@ -54,11 +54,12 @@ io.on('connect', (socket) => {
     })
 
 /*
-    user starts game then others join  
-    the game:start fires with loading of items from the backend
-    the level start the event
-    1: load the items
+ *  user starts game then others join  
+ *  the game:start fires with loading of items from the backend
+ *  the level start the event
+ *  1: load the items 
 */
+
 
     socket.on('game:level', () => {
         // Needs refactoring later
@@ -90,13 +91,12 @@ io.on('connect', (socket) => {
         // setTimeout( () => {
         // items = Object.keys(data);
         // }, 100)
+        dataItems = dataItems.sort( () => 0.5 - Math.random() )
         items = getRandomIndexes(2).map( (index) => getItemByIndex(index))
         const user = getUser(socket.id)
         io.to(user.room).emit("levelOne", ...items )
         console.log('running');
     })
-
-
 
     socket.on('disconnect', () => {   
         console.log('Client just left');   
