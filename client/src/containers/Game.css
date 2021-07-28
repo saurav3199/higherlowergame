@@ -17,7 +17,7 @@
   overflow: hidden;
 } */
 
-.ImageContainer {
+.imageContainer {
   padding: 0;
   margin: 0;
   display: flex;
@@ -30,7 +30,7 @@
 }
 
 /* To the left image  */
-.LeftImageContainer {
+.leftImageContainer {
   display: flex;
   transform: translateZ(-10);
   justify-content: center;
@@ -40,7 +40,22 @@
   width: 50vw;
 }
 
-.RightImageContainer {
+
+.centerTimerContainer {
+  min-height: 100px;
+  min-width: 100px;
+  font-size: 50px;
+  position: relative;
+  left:3%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.rightImageContainer {
 
   display:flex;
   transform: translateZ(-10);

@@ -2,7 +2,7 @@ import React from "react";
 import "./Image.css";
 
 const Image = ({ imageData, position, sendAnswer }) => {
-  console.log(position, sendAnswer);
+  // console.log(position, sendAnswer);
   if (!imageData) return <>image not rendered</>;
 
   return (

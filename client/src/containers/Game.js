@@ -14,7 +14,7 @@ const Game = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [started, setStarted] = useState(false);
 
-  console.log(userName, roomName, users);
+  // console.log(userName, roomName, users);
 
   // User joins a room
   useEffect(() => {
@@ -55,8 +55,16 @@ const Game = ({ location }) => {
   return (
     <>
       <Users users={users} />
-      {!started ? <GameScreen users={users} userName={userName} socket={socket} setStarted={setStarted}/>
-      : <LiveScreen socket={socket} setStarted={setStarted}/>}
+      {!started ? (
+        <GameScreen
+          users={users}
+          userName={userName}
+          socket={socket}
+          setStarted={setStarted}
+        />
+      ) : (
+        <LiveScreen socket={socket} setStarted={setStarted} />
+      )}
     </>
   );
 };
