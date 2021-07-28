@@ -21,10 +21,10 @@ const Image = ({ imageData, position, sendAnswer }) => {
       <div className="buttonContainer">
         {position === "right" && (
           <>
-            <button class="gameButton" onClick={() => sendAnswer("Higher")}>
+            <button className="gameButton" onClick={() => sendAnswer("Higher")}>
               Hi
             </button>
-            <button class="gameButton" onClick={() => sendAnswer("Lower")}>
+            <button className="gameButton" onClick={() => sendAnswer("Lower")}>
               Lo
             </button>
           </>
