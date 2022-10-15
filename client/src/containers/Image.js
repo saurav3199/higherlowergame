@@ -1,34 +1,37 @@
 import React from "react";
+import "./Image.css";
 
-
-const Image = ({imageData, position, sendAnswer}) => {
-  console.log(position, sendAnswer);
-  if(!imageData)
-    return (
-      <> 
-        image not rendered
-      </>
-    )
+const Image = ({ imageData, position, sendAnswer }) => {
+  // console.log(position, sendAnswer);
+  if (!imageData) return <>image not rendered</>;
 
   return (
     <>
-      <img src={imageData.image} alt={imageData.term} />
-      <p style={{ color: "red"}}> 
-        Name: {imageData.term}
-      </p>
-      { position === "left" && 
-        <div style={{ color: "red"}}>
-          Value: {imageData.searchVolume}
-        </div>
-      }
-      { position === "right" && 
-        <>
-          <button onClick={() => sendAnswer("Higher")}>Hi</button>
-          <button onClick={() => sendAnswer("Lower")}>Lo</button>
-        </>
-      }
-    </>
-  )
-}
+      <div
+        className="imageContainer"
+        style={{ backgroundImage: `url(${imageData.image})` }}
+      >
+        {/* <img src={imageData.image} alt={imageData.term} /> */}
+        <p style={{ color: "red" }}>Name: {imageData.term}</p>
+        {position === "left" && (
+          <div style={{ color: "blue" }}>Value: {imageData.searchVolume}</div>
+        )}
+      </div>
 
-export default Image
+      <div className="buttonContainer">
+        {position === "right" && (
+          <>
+            <button className="gameButton" onClick={() => sendAnswer("Higher")}>
+              Hi
+            </button>
+            <button className="gameButton" onClick={() => sendAnswer("Lower")}>
+              Lo
+            </button>
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Image;
