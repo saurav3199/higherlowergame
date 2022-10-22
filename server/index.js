@@ -4,7 +4,7 @@ let dataItems = require('./newdata.json')["items"]
 
 const {addUser, removeUser, getUsersInRoom, getUser, updateUserLevel } = require('./users')
 const app = require('./app');
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3001
 
 const server = http.createServer(app)
 const io = socketio(server, {

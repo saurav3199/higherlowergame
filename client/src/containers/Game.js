@@ -6,7 +6,7 @@ import LiveScreen from "./LiveScreen";
 import GameScreen from "./GameScreen";
 
 let socket;
-const ENDPOINT = "localhost:5000";
+const ENDPOINT = "localhost:3001";
 
 const Game = ({ location }) => {
   const [roomName, setRoomName] = useState("");
